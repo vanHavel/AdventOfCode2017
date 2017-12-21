@@ -5,7 +5,7 @@ import Control.Monad
 import Control.Monad.State.Lazy
 import Debug.Trace
 
-import Day18Parse
+import Utility.Day18Parse
 
 -- read input and print solutions
 main :: IO ()

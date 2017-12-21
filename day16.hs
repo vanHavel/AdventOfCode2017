@@ -65,14 +65,16 @@ solvePart2 :: [Command] -> String
 solvePart2 cmds = 
   -- remove shifts
   let (fewer,shift) = simplifyShift cmds in runST $ do
-    -- build permutations for partner and exchange operations independently
+    -- build permutations for partner and exchange operations independently, as they actually commute
     indexMap <- newListArray (0,15) [0..15] :: ST s (STUArray s Int Int)
     charMap <- newListArray ('a','p') ['a'..'p'] :: ST s (STUArray s Char Char)
     buildIndexMap indexMap (filter isExchange $ reverse fewer)
     buildCharMap charMap (filter (not . isExchange) $ reverse fewer)
     -- apply one billion rounds
     accu <- newListArray (0,15) ['a'..'p']
-    --it is enough to run 1000 rounds because the computation cycles
+    -- it is enough to run 1000 rounds because the computation cycles
+    -- this implementation is only fast enough to run around 1.000.000 rounds in a reasonable time, but i discovered the cycle property before optimizing further
+    -- the speed could be improved by a square and multiply approach using the indexMap and charMap. Also the shift can be integrated into the indexMap
     replicateM_ 1000 $ applyRound accu indexMap charMap shift
     res <- getElems accu
     return res 

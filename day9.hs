@@ -9,7 +9,7 @@ main = do
   print $ score simplified
   print garbageCount
   
--- simplify string to nested parantheses
+-- simplify string to nested parantheses, counting removed characters minus escapes
 process :: String -> (String, Int)
 process = dropGarbage . removeEscapes
 

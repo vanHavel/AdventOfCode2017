@@ -5,8 +5,8 @@ import Data.Array
 import Control.Monad.ST
 import Debug.Trace
 
-import Knothash
-import UnionFind
+import Utility.Knothash
+import Utility.UnionFind
 
 -- print solutions
 main :: IO ()

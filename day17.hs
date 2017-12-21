@@ -1,24 +1,10 @@
+import Utility.Zipper
+
 -- print solutions
 main :: IO ()
 main = do
   print $ solvePart1
   print $ solvePart2
-
--- zipper data type for nonempty lists
-data Zipper a = Zipper [a] [a]
-
--- advance the zipper one step
-advance :: Zipper a -> Zipper a
-advance (Zipper xs [y]) = Zipper [] (reverse (y:xs))
-advance (Zipper xs (y:ys)) = Zipper (y:xs) ys
-
--- insert into zipper
-insert :: a -> Zipper a -> Zipper a
-insert y (Zipper xs ys) = Zipper xs (y:ys)
-
--- get current element
-current :: Zipper a -> a
-current (Zipper _ (y:_)) = y
 
 -- walk given number of steps, then insert into zipper
 walkAndInsert :: Int -> Zipper a -> a -> Zipper a
