@@ -1,6 +1,8 @@
 import Data.Array
 import Data.Bifunctor
 
+import Utility.Orientation
+
 -- read input and print solutions
 main :: IO ()
 main = do
@@ -13,30 +15,8 @@ main = do
       initialPos = getInitialPos field
   print $ walk field initialPos S
     
--- field, position and direction types
-type Field = Array (Int, Int) Char
-type Position = (Int, Int)
-data Direction = N | S | W | E deriving (Show)
-
--- utilities for directions and position
-turnLeft :: Direction -> Direction
-turnLeft N = W
-turnLeft W = S
-turnLeft S = E
-turnLeft E = N
-
-turnRight :: Direction -> Direction
-turnRight N = E
-turnRight E = S
-turnRight S = W
-turnRight W = N
-
-advance :: Position -> Direction -> Position
-advance (i,j) d = case d of
-  N -> (pred i, j)
-  E -> (i, succ j)
-  S -> (succ i, j)
-  W -> (i, pred j)
+-- field, type types
+type Field = Array Position Char
   
 -- utilities for field access
 isWalkable :: Field -> Position -> Bool
