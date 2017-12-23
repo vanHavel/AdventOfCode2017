@@ -1,4 +1,4 @@
-module Utility.Day18Parse where
+module Utility.ParseAssembly where
   
 -- a value can either be a constant or a variable reference
 data Value = Constant Int | Reference Char
@@ -7,10 +7,12 @@ data Instruction =
   Sound Value |
   Set Char Value |
   Add Char Value |
+  Sub Char Value | 
   Mul Char Value |
   Mod Char Value |
   Recover Char |
-  JumpGZ Value Value
+  JumpGZ Value Value |
+  JumpNZ Value Value
   
 -- parse an instruction
 parse :: String -> Instruction
@@ -19,10 +21,12 @@ parse s = let ws = words s in
     "snd" : [x] -> Sound (parseValue x)
     "set" : [c] : [x] -> Set c (parseValue x)
     "add" : [c] : [x] -> Add c (parseValue x)
+    "sub" : [c] : [x] -> Sub c (parseValue x)
     "mul" : [c] : [x] -> Mul c (parseValue x)
     "mod" : [c] : [x] -> Mod c (parseValue x)
     "rcv" : [[c]] -> Recover c
     "jgz" : x : [y] -> JumpGZ (parseValue x) (parseValue y)
+    "jnz" : x : [y] -> JumpNZ (parseValue x) (parseValue y)
 
 -- parse a value    
 parseValue :: String -> Value
